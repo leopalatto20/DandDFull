@@ -18,10 +18,11 @@ public:
         if(table) {
             delete[] table;
             table = nullptr;
+            hashFunction = nullptr;
             size = 0;
         }
     }
-    bool createTable(unsigned int size,HashFunction hashFunction) {
+    bool createTable(unsigned int size, HashFunction hashFunction) {
         if(table || !size || !hashFunction)
             return false;
         table = new(nothrow) AvlTree<T>[size];

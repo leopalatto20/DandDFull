@@ -4,7 +4,6 @@
 #include "Room.h"
 #include <fstream>
 #include <sstream>
-#define DUNGEON "dungeon.txt"
 
 class Dungeon {
 private:
@@ -13,7 +12,7 @@ public:
     Dungeon();
     ~Dungeon();
     bool createRoom(unsigned int index, Monster &monster);
-    bool createDungeon();
+    bool createDungeon(const string &fileName);
     void printRooms();
     unsigned int getSize();
 };

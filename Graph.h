@@ -2,6 +2,7 @@
 #include "Vertex.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -66,5 +67,39 @@ public:
     }
     int getSize() {
         return this->size;
+    }
+
+    bool createFromCSV(const string &fileName) {
+        ifstream file(fileName);
+        if(!file.is_open())
+            return false;
+        string line;
+        getline(file, line);
+        if(line != "Grafo") {
+            cerr << "El archivo no es un grafo.\n";
+            return false;
+        }
+        if(!getline(file, line)) {
+            cerr << "El archivo no contiene el tamaño del grafo.\n";
+            return false;
+        }
+        stringstream ss(line);
+        unsigned int size;
+        ss >> size;
+        if(!createGraph(size))
+            return false;
+        unsigned int vertexIndex = 0;
+        while(getline(file, line)) {
+            stringstream ss(line);
+            unsigned int adjacentVertex;
+            while(ss >> adjacentVertex) {
+                if(!connect(vertexIndex, adjacentVertex))
+                    return false;
+            }
+            vertexIndex++;
+
+        }
+        file.close();
+        return true;
     }
 };

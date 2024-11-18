@@ -14,7 +14,7 @@ int main() {
         return 1;
     }
     cout << "Crear dungeon...\n";
-    if(!dungeon.createDungeon()) {
+    if(!dungeon.createDungeon("dungeon.txt")) {
         cerr << "No se pudo crear la dungeon.\n";
         return 1;
     }
@@ -34,6 +34,7 @@ int main() {
         cerr << "No se pudo cargar la tienda de hechizos.\n";
         return 1;
     }
+    catalogue.print();
     dungeon.printRooms();
     catalogue.deleteCatalogue(); //Borrar catalogo porque ya no lo vamos a usar
 
