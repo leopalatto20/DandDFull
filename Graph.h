@@ -46,18 +46,14 @@ public:
             return false;
         if(vertexes[vertex1].adjacents.contains(vertex2))
             return false;
-        if(!vertexes[vertex1].connect(vertex2))
-            return false;
-        return true;
+        return vertexes[vertex1].connect(vertex2);
     }
     bool disconnect(unsigned int vertex1, unsigned int vertex2) {
         if(!vertexes)
             return false;
         if(!vertexes[vertex1].adjacents.contains(vertex2))
             return false;
-        if(!vertexes[vertex1].adjacents.deleteData(vertex2))
-            return false;
-        return true;
+        return vertexes[vertex1].adjacents.deleteData(vertex2);
     }
     void print() {
         for(unsigned int i = 0; i < size; i++) {
@@ -65,7 +61,7 @@ public:
             vertexes[i].adjacents.print();
         }
     }
-    int getSize() {
+    unsigned int getSize() {
         return this->size;
     }
 
