@@ -85,21 +85,35 @@ public:
         }
         stringstream ss(line);
         unsigned int size;
-        ss >> size;
+        string numStr;
+        ss >> numStr;
+        if(!isValidNumber(numStr))
+            return false;
+        size = stoi(numStr);
         if(!createGraph(size))
             return false;
         unsigned int vertexIndex = 0;
         while(getline(file, line)) {
             stringstream ss(line);
             unsigned int adjacentVertex;
-            while(ss >> adjacentVertex) {
+            while(ss >> numStr) {
+                if(!isValidNumber(numStr))
+                    return false;
+                adjacentVertex = stoi(numStr);
                 if(!connect(vertexIndex, adjacentVertex))
                     return false;
             }
             vertexIndex++;
-
         }
         file.close();
+        return true;
+    }
+
+    bool isValidNumber(const string &str) {
+        for(int i = 0; i < str.length(); i++) {
+            if(!isdigit(str[i]))
+                return false;
+        }
         return true;
     }
 };
