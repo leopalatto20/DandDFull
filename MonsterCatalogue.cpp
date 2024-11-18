@@ -89,7 +89,7 @@ bool MonsterCatalogue::loadFromCsv() {
     file.close();
     return true;
 }
-Monster *MonsterCatalogue::getMonster() {
+Monster* MonsterCatalogue::getMonster() {
     Monster *foundMonster = catalogue.generateRandom();
     if(!foundMonster)
         return nullptr;

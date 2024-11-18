@@ -21,7 +21,7 @@ bool Spell::operator == (Spell &spell) {
     return this->name == spell.name;
 }
 
-bool Spell::operator!=(Spell &spell) {
+bool Spell::operator != (Spell &spell) {
     return this->name != spell.name;
 }
 
