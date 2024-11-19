@@ -115,6 +115,8 @@ public:
     T* getFromIndex(unsigned int index) {
         if(!vertexes)
             return nullptr;
+        if(index >= size)
+            return nullptr;
         return &vertexes[index].data;
     }
     void recursiveDFS(unsigned int index) {
