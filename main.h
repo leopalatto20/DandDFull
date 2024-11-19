@@ -10,3 +10,4 @@ using namespace std;
 unsigned int getNumericInput();
 bool isValidNumber(const string &str);
 bool buySpells(Player &player, SpellShop &spellShop);
+bool fightMonster(Player &player, Monster &monster);

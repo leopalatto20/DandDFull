@@ -21,3 +21,14 @@ bool Dungeon::createDungeon(const string &fileName) {
 unsigned int Dungeon::getSize() {
     return rooms.getSize();
 }
+
+Monster* Dungeon::getMonster(unsigned int index) {
+    Room *selectedRoom = rooms.getFromIndex(index);
+    if(!selectedRoom)
+        return nullptr;
+    return &selectedRoom->monster;
+}
+
+void Dungeon::recursiveDFS(unsigned int index) {
+    rooms.recursiveDFS(index);
+}

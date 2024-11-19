@@ -10,7 +10,7 @@ int main() {
     srand(time(0));
     cout << "Crear catalogo...\n";
     if(!catalogue.loadFromCsv()) {
-        cerr << "No se pudo creare el catalogo.\n";
+        cerr << "No se pudo crear el catalogo.\n";
         return 1;
     }
     cout << "Crear dungeon...\n";
@@ -81,6 +81,25 @@ int main() {
         return 1;
 
     player.showInfo();
+
+    cout << "Recorrido DFS de la dungeon desde el cuarto 0:\n";
+    dungeon.recursiveDFS(0);
+
+    cout << endl << endl;
+
+    Monster *pMonster = dungeon.getMonster(0), copyMonster;
+    if(!pMonster) {
+        cerr << "No se pudo obtener un monstruo de la dungeon.\n";
+        return 1;
+    }
+    copyMonster = *pMonster;
+    if(!fightMonster(player, copyMonster)) {
+        cout << "Perdiste contra el monstruo: " << copyMonster << endl;
+        return 0;
+    }
+    cout << "Derrotaste al monstruo: " << copyMonster << endl << "Saliendo del programa.\n";
+    player.addMonster(copyMonster);
+    player.showInfo();
     return 0;
 }
 
@@ -129,4 +148,48 @@ bool buySpells(Player &player, SpellShop &spellShop) {
         }
     }
     return true;
+}
+
+bool fightMonster(Player &player, Monster &monster) {
+    cout << "Peleando contra: " << monster << " " << monster.getType() << " con HP: " << monster.getHp();
+    cout << "\nEmpieza la pelea.\n";
+    while(player.getHp() > 0 && monster.getHp() > 0) {
+        int spellChoice, damage;
+        string spellChoiceStr;
+        bool validSpell = false;
+        cout << "Tienes " << player.getHp() << " puntos de vida.\n";
+        cout << "Tienes " << player.getMp() << "MP.\n";
+        while(!validSpell) {
+            do {
+                player.showSpells();
+                cout << "0. Usar hechizo default.\n\n";
+                cout << "Escoge uno de tus hechizos: ";
+                cin >> spellChoiceStr;
+                if(!isValidNumber(spellChoiceStr))
+                    cout << "No es un numero valido";
+            } while(!isValidNumber(spellChoiceStr));
+            spellChoice = stoi(spellChoiceStr);
+            damage = player.getSpellDamage(spellChoice);
+            if(damage <= 0)
+                cout << "No puedes usar ese hechizo.\n";
+            else
+                validSpell = true;
+        }
+        int newDamage = damage * player.getDamageMultiplier();
+        cout << "\nLe haces " << newDamage << " de danio al monstruo.\n";
+        monster.setHp(monster.getHp() - newDamage);
+
+        if(monster.getHp() <= 0) {
+            monster.setHp(0);
+            return true;
+        }
+        cout << monster << " HP: " << monster.getHp();
+        cout << "\nAhora el monstruo te ataca y te hace 20 de danio.\n";
+        player.setHp(player.getHp() - 20);
+        if(player.getHp() <= 0) {
+            player.setHp(0);
+            return false;
+        }
+    }
+    return player.getHp() > 0; // no deberia de llegar a este punto pero manda advertencia cuando compilo
 }

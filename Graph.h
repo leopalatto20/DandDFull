@@ -112,4 +112,17 @@ public:
         }
         return true;
     }
+    T* getFromIndex(unsigned int index) {
+        if(!vertexes)
+            return nullptr;
+        return &vertexes[index].data;
+    }
+    void recursiveDFS(unsigned int index) {
+        vertexes[index].visited = true;
+        cout << index << " ";
+        DLinkedList<unsigned int>::Iterator i(nullptr);
+        for(i = vertexes[index].adjacents.begin(); i != vertexes[index].adjacents.end(); ++i)
+            if(!vertexes[*i].visited)
+                recursiveDFS(*i);
+    }
 };

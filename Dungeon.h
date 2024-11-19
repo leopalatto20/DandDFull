@@ -15,4 +15,6 @@ public:
     bool createDungeon(const string &fileName);
     void printRooms();
     unsigned int getSize();
+    Monster* getMonster(unsigned int index);
+    void recursiveDFS(unsigned int index);
 };
