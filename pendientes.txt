@@ -1,0 +1,2 @@
+Pendiente: 
+Hacer un sistema de dificultades, calcular varias listas ligadas a varios indices desde 0, la dificultad fácil es la ruta más corta, en la dificultad difícil se usa la ruta al inice mas lejano desde 0.
