@@ -13,3 +13,5 @@ bool buySpells(Player &player, SpellShop &spellShop);
 bool fightMonster(Player &player, Monster &monster);
 void healPlayer(Player &player);
 void levelPlayerUp(Player &player);
+unsigned int d10Roll();
+unsigned int twoD20Roll();

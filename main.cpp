@@ -93,11 +93,13 @@ int main() {
     unsigned int inicio, final;
     cout << "Elige una ruta.\n";
     do {
-        cout << "Dame el cuarto inicial: ";
-        cin >> inicio;
-        cout << "Dame el cuarto final: ";
-        cin >> final;
-    } while(final > dungeon.getSize() || inicio == final);
+        cout << "Dame el cuarto inicial: \n";
+        inicio = getNumericInput();
+        cout << "Dame el cuarto final: \n";
+        final = getNumericInput();
+        if(final > dungeon.getSize() || inicio == final || inicio > dungeon.getSize())
+            cerr << "Tus numeros son invalidos.\n";
+    } while(final > dungeon.getSize() || inicio == final || inicio > dungeon.getSize());
 
     dungeon.printPath();
     if(!dungeon.createRoute(inicio, final)) {
@@ -212,7 +214,8 @@ bool fightMonster(Player &player, Monster &monster) {
             return true;
         }
         cout << monster << " HP: " << monster.getHp();
-        cout << "\nAhora el monstruo te ataca y te hace 20 de danio.\n\n";
+        unsigned int dmg = d10Roll();
+        cout << "\nAhora el monstruo te ataca y te hace " << dmg << " de danio.\n\n";
         player.setHp(player.getHp() - 20);
         if(player.getHp() <= 0) {
             player.setHp(0);
@@ -223,7 +226,9 @@ bool fightMonster(Player &player, Monster &monster) {
 }
 
 void healPlayer(Player &player) {
-    player.setHp(player.getHp() + 50);
+    unsigned int addHp = twoD20Roll();
+    cout << "\nRecuperas " << addHp << " de vida antes de pelear contra el siguiente monstruo.\n";
+    player.setHp(player.getHp() + addHp);
     if(player.getHp() > player.getMaxHp()) //su vida no puede superar la maxima
         player.setHp(player.getMaxHp());
     player.setMp(player.getMp() + 50);
@@ -259,4 +264,13 @@ void levelPlayerUp(Player &player) {
             break;
         }
     }
+}
+
+unsigned int d10Roll() {
+    return 1 + rand() % 10;
+}
+unsigned int twoD20Roll() {
+    unsigned int num1 = 1 + rand() % 20;
+    unsigned int num2 = 1 + rand() % 20;
+    return num1 + num2;
 }
