@@ -84,21 +84,11 @@ int main() {
 
     cout << "Recorrido DFS de la dungeon desde el cuarto 0:\n";
     dungeon.DFS(0);
+    cout << endl;
+    cout << "Recordido BFS de la dungeon desde el cuarto 0: \n";
+    dungeon.BFS(0);
 
     cout << endl << endl;
-
-    Monster *pMonster = dungeon.getMonster(0), copyMonster;
-    if(!pMonster) {
-        cerr << "No se pudo obtener un monstruo de la dungeon.\n";
-        return 1;
-    }
-    copyMonster = *pMonster;
-    if(!fightMonster(player, copyMonster)) {
-        cout << "Perdiste contra el monstruo: " << copyMonster << endl;
-    }
-    cout << "Derrotaste al monstruo: " << copyMonster << endl << "Saliendo del programa.\n";
-    player.addMonster(copyMonster);
-    player.showInfo();
 
     unsigned int inicio, final;
     cout << "Elige una ruta.\n";
@@ -114,6 +104,30 @@ int main() {
         cout << "No existe una ruta de " << inicio << " a " << final << endl;
         return 1;
     }
+    unsigned int monsterCounter(0);
+    do {
+        Room *current = dungeon.currentRoomPath();
+        if(!current) {
+            cerr << "No se pudo obtener el cuarto actual.\n";
+            return 1;
+        }
+        cout << "Entrando a " << *current << endl;
+        Monster currentMonster = current->monster;
+        if(!fightMonster(player, currentMonster)) {
+            cout << "Perdiste contra el monstruo " << currentMonster << endl << "Saliendo del programa.\n";
+            player.showInfo();
+            return 0;
+        }
+        cout << "Derrotaste al monstruo: " << currentMonster << endl << endl;;
+        player.addMonster(currentMonster);
+        healPlayer(player);
+        if(monsterCounter > 0 && monsterCounter % 3 == 0) //el jugador se puede levelear cada 3 monstruos
+            levelPlayerUp(player);
+        monsterCounter++;
+    } while(dungeon.goForward());
+    cout << "Terminaste la dungeon!!!.\n";
+    player.showInfo();
+
     return 0;
 }
 
@@ -198,7 +212,7 @@ bool fightMonster(Player &player, Monster &monster) {
             return true;
         }
         cout << monster << " HP: " << monster.getHp();
-        cout << "\nAhora el monstruo te ataca y te hace 20 de danio.\n";
+        cout << "\nAhora el monstruo te ataca y te hace 20 de danio.\n\n";
         player.setHp(player.getHp() - 20);
         if(player.getHp() <= 0) {
             player.setHp(0);
@@ -206,4 +220,43 @@ bool fightMonster(Player &player, Monster &monster) {
         }
     }
     return player.getHp() > 0; // no deberia de llegar a este punto pero manda advertencia cuando compilo
+}
+
+void healPlayer(Player &player) {
+    player.setHp(player.getHp() + 50);
+    if(player.getHp() > player.getMaxHp()) //su vida no puede superar la maxima
+        player.setHp(player.getMaxHp());
+    player.setMp(player.getMp() + 50);
+}
+
+void levelPlayerUp(Player &player) {
+    int option;
+    bool validOption = false;
+    string optionStr;
+    while(!validOption) {
+        do {
+            cout << "Llegaste a un punto seguro, puedes subir de nivel.\n"
+                    "1. Aumentar tu vida maxima en 50 puntos.\n"
+                    "2. Aumentar tu multiplicador de danio en 25%.\n";
+            cin >> optionStr;
+            if(!isValidNumber(optionStr))
+                cout << "No es un número valido.";
+        } while(!isValidNumber(optionStr));
+        option = stoi(optionStr);
+        if(option > 0 && option < 3)
+            validOption = true;
+    }
+    switch(option) {
+        case 1: {
+            player.setMaxHp(player.getMaxHp() + 50);
+            break;
+        }
+        case 2: {
+            player.setDamageMultiplier(player.getDamageMultiplier() + 0.25);
+            break;
+        }
+        default: {
+            break;
+        }
+    }
 }

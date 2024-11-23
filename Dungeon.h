@@ -9,6 +9,7 @@ class Dungeon {
 private:
     Graph<Room> rooms;
     DLinkedList<unsigned int> path;
+    unsigned int currentRoom;
 public:
     Dungeon();
     ~Dungeon();
@@ -16,8 +17,10 @@ public:
     bool createDungeon(const string &fileName);
     void printRooms();
     unsigned int getSize();
-    Monster* getMonster(unsigned int index);
-    void DFS(unsigned int index);
+    bool DFS(unsigned int index);
+    bool BFS(unsigned int index);
     bool createRoute(unsigned int startIndex, unsigned int endIndex);
     void printPath();
+    Room* currentRoomPath();
+    bool goForward();
 };

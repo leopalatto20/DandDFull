@@ -1,6 +1,5 @@
 #pragma once
 #include <climits>
-
 #include "Vertex.h"
 #include <iostream>
 #include <fstream>
@@ -74,6 +73,7 @@ public:
     void print() {
         for(unsigned int i = 0; i < size; i++) {
             cout << "[" << i << "]" << vertexes[i].data << ": ";
+            cout << "| Conectado con: ";
             vertexes[i].adjacents.print();
         }
     }
@@ -231,5 +231,10 @@ public:
         }
         delete[] previous;
         return false;
+    }
+    T* returnFromIndex(unsigned int index) {
+        if(index >= size)
+            return nullptr;
+        return &vertexes[index].data;
     }
 };

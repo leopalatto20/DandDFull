@@ -44,7 +44,7 @@ bool Player::loadStats() {
 void Player::showInfo() {
     cout << "Jugador: " << name << "\n";
     cout << "Clase: " << build << "\n";
-    cout << "Hp: " << hp << "\n";
+    cout << "Hp: " << hp << "\n\n";
     cout << "Ataque default: " << defaultAttack << "\n";
     cout << "Lista de hechizos: \n";
     playerSpells.printInOrder();

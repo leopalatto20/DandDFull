@@ -9,6 +9,6 @@ Room::~Room() {
 }
 
 ostream &operator << (ostream &os, Room &room) {
-    os << "Cuarto con: " << room.monster << "| conectado con cuartos: ";
+    os << "Cuarto con: " << room.monster;
     return os;
 }

@@ -1,6 +1,6 @@
 #include "Dungeon.h"
 
-Dungeon::Dungeon() { //todos mis caminos empiezan desde el primer cuarto
+Dungeon::Dungeon() : currentRoom(0){
 }
 
 Dungeon::~Dungeon() {
@@ -22,15 +22,11 @@ unsigned int Dungeon::getSize() {
     return rooms.getSize();
 }
 
-Monster* Dungeon::getMonster(unsigned int index) {
-    Room *selectedRoom = rooms.getFromIndex(index);
-    if(!selectedRoom)
-        return nullptr;
-    return &selectedRoom->monster;
+bool Dungeon::DFS(unsigned int index) {
+    return rooms.DFS(index);
 }
-
-void Dungeon::DFS(unsigned int index) {
-    rooms.DFS(index);
+bool Dungeon::BFS(unsigned int index) {
+    return rooms.BFS(index);
 }
 
 bool Dungeon::createRoute(unsigned int startIndex, unsigned int endIndex) {
@@ -39,9 +35,37 @@ bool Dungeon::createRoute(unsigned int startIndex, unsigned int endIndex) {
     if(path.getSize() <= 0)
         return false;
     printPath();
+    this->currentRoom = startIndex;
     return true;
 }
 
 void Dungeon::printPath() {
     path.print();
+}
+
+Room* Dungeon::currentRoomPath() {
+    return rooms.returnFromIndex(currentRoom);
+}
+
+bool Dungeon::goForward() {
+    if (path.getSize() > 0) {
+        auto it = path.begin();  // Inicializamos el iterador al inicio de la lista
+
+        // Avanzamos hasta encontrar currentRoom en la lista
+        while (it != path.end() && *it != currentRoom) {
+            ++it;
+        }
+
+        // Si encontramos currentRoom, avanzamos al siguiente cuarto
+        if (it != path.end()) {
+            ++it;
+
+            // Vemos si todavia se puede avanzar
+            if (it != path.end()) {
+                currentRoom = *it;
+                return true;
+            }
+        }
+    }
+    return false;
 }
