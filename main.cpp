@@ -83,7 +83,7 @@ int main() {
     player.showInfo();
 
     cout << "Recorrido DFS de la dungeon desde el cuarto 0:\n";
-    dungeon.recursiveDFS(0);
+    dungeon.DFS(0);
 
     cout << endl << endl;
 
@@ -95,11 +95,25 @@ int main() {
     copyMonster = *pMonster;
     if(!fightMonster(player, copyMonster)) {
         cout << "Perdiste contra el monstruo: " << copyMonster << endl;
-        return 0;
     }
     cout << "Derrotaste al monstruo: " << copyMonster << endl << "Saliendo del programa.\n";
     player.addMonster(copyMonster);
     player.showInfo();
+
+    unsigned int inicio, final;
+    cout << "Elige una ruta.\n";
+    do {
+        cout << "Dame el cuarto inicial: ";
+        cin >> inicio;
+        cout << "Dame el cuarto final: ";
+        cin >> final;
+    } while(final > dungeon.getSize() || inicio == final);
+
+    dungeon.printPath();
+    if(!dungeon.createRoute(inicio, final)) {
+        cout << "No existe una ruta de " << inicio << " a " << final << endl;
+        return 1;
+    }
     return 0;
 }
 
@@ -151,7 +165,7 @@ bool buySpells(Player &player, SpellShop &spellShop) {
 }
 
 bool fightMonster(Player &player, Monster &monster) {
-    cout << "Peleando contra: " << monster << " " << monster.getType() << " con HP: " << monster.getHp();
+    cout << "Peleando contra: " << monster << " con HP: " << monster.getHp();
     cout << "\nEmpieza la pelea.\n";
     while(player.getHp() > 0 && monster.getHp() > 0) {
         int spellChoice, damage;

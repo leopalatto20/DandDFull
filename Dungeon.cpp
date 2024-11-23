@@ -1,6 +1,6 @@
 #include "Dungeon.h"
 
-Dungeon::Dungeon() {
+Dungeon::Dungeon() { //todos mis caminos empiezan desde el primer cuarto
 }
 
 Dungeon::~Dungeon() {
@@ -29,6 +29,19 @@ Monster* Dungeon::getMonster(unsigned int index) {
     return &selectedRoom->monster;
 }
 
-void Dungeon::recursiveDFS(unsigned int index) {
-    rooms.recursiveDFS(index);
+void Dungeon::DFS(unsigned int index) {
+    rooms.DFS(index);
+}
+
+bool Dungeon::createRoute(unsigned int startIndex, unsigned int endIndex) {
+    if(!rooms.BFSPath(startIndex, endIndex, path))
+        return false;
+    if(path.getSize() <= 0)
+        return false;
+    printPath();
+    return true;
+}
+
+void Dungeon::printPath() {
+    path.print();
 }

@@ -8,8 +8,9 @@ template <typename T>
 class DLinkedList {
 private:
     DLinkedNode<T> *head;
+    unsigned int size;
 public:
-    DLinkedList() : head(nullptr) {
+    DLinkedList() : head(nullptr), size(0) {
     }
     ~DLinkedList() {
         deleteList();
@@ -22,6 +23,7 @@ public:
             current = temp;
         }
         head = nullptr;
+        size = 0;
     }
     bool insertEnd(T data) {
         DLinkedNode<T> *newNode = new(nothrow) DLinkedNode<T>(data);
@@ -33,10 +35,12 @@ public:
         }
         if(!current) {
             head = newNode;
+            size++;
             return true;
         }
         current->next = newNode;
         newNode->prev = current;
+        size++;
         return true;
     }
     bool insertStart(T data) {
@@ -48,6 +52,7 @@ public:
             head->prev = newNode;
         }
         head = newNode;
+        size++;
         return true;
     }
     bool deleteData(T data) {
@@ -61,12 +66,14 @@ public:
             DLinkedNode<T> *temp = head;
             head = head->next;
             delete temp;
+            size--;
             return true;
         }
         if(current->next)
             current->next->prev = current->prev;
         current->prev->next = current->next;
         delete current;
+        size--;
         return true;
     }
     void printInOrder() {
@@ -113,12 +120,14 @@ public:
             return false;
         if(!head) {
             head = newNode;
+            size++;
             return true;
         }
         if(data < head->data) {
             newNode->next = head;
             head->prev = newNode;
             head = newNode;
+            size++;
             return true;
         }
         DLinkedNode<T> *current = head;
@@ -130,6 +139,7 @@ public:
         if(current->next)
             current->next->prev = newNode;
         current->next = newNode;
+        size++;
         return true;
     }
 
@@ -159,5 +169,8 @@ public:
     }
     Iterator end() {
         return Iterator(nullptr);
+    }
+    unsigned int getSize() {
+        return this->size;
     }
 };

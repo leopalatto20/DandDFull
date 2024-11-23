@@ -1,4 +1,6 @@
 #pragma once
+#include <climits>
+
 #include "Vertex.h"
 #include <iostream>
 #include <fstream>
@@ -15,8 +17,7 @@ private:
     Vertex<T> *vertexes;
     void clearVisited() {
         for(unsigned int i = 0; i < size; i++)
-            for(auto connection : vertexes[i].adjacents)
-                vertexes[connection].visited = false;
+            vertexes[i].visited = false;
     }
     bool isValidNumber(const string &str) {
         for(int i = 0; i < str.length(); i++) {
@@ -25,6 +26,7 @@ private:
         }
         return true;
     }
+    DLinkedList<unsigned int> path;
 public:
     Graph() : vertexes(nullptr), size(0) {
     }
@@ -176,5 +178,58 @@ public:
         }
         cout << endl;
         return true;
+    }
+
+    bool BFSPath(unsigned int startVertex, unsigned int endVertex, DLinkedList<unsigned int>& path) {
+        Queue<unsigned int> queue;
+        if(!size || startVertex >= size || endVertex >= size)
+            return false;
+
+        clearVisited();
+
+        unsigned int *previous = new(nothrow) unsigned int[size];
+        if(!previous)
+            return false;
+        for(unsigned int i = 0; i < size;  i++) {
+            previous[i] = UINT_MAX;
+        }
+        if(!queue.enqueue(startVertex)) {
+            delete[] previous;
+            return false;
+        }
+        vertexes[startVertex].visited = true;
+
+        while(!queue.isEmpty()) {
+            unsigned int currentVertex = *queue.getFront();
+            queue.dequeue();
+
+            for(auto connection : vertexes[currentVertex].adjacents) {
+                if(!vertexes[connection].visited) {
+                    if(!queue.enqueue(connection)) {
+                        delete[] previous;
+                        return false;
+                    }
+                    vertexes[connection].visited = true;
+                    previous[connection] = currentVertex;
+                    if(connection == endVertex) {
+                        Stack<unsigned int> stack;
+
+                        unsigned int current = endVertex;
+                        while(current != UINT_MAX) {
+                            stack.push(current);
+                            current = previous[current];
+                        }
+                        while(!stack.isEmpty()) {
+                            path.insertEnd(*stack.getTop());
+                            stack.pop();
+                        }
+                        delete[] previous;
+                        return true;
+                    }
+                }
+            }
+        }
+        delete[] previous;
+        return false;
     }
 };

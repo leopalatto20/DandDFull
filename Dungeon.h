@@ -8,6 +8,7 @@
 class Dungeon {
 private:
     Graph<Room> rooms;
+    DLinkedList<unsigned int> path;
 public:
     Dungeon();
     ~Dungeon();
@@ -16,5 +17,7 @@ public:
     void printRooms();
     unsigned int getSize();
     Monster* getMonster(unsigned int index);
-    void recursiveDFS(unsigned int index);
+    void DFS(unsigned int index);
+    bool createRoute(unsigned int startIndex, unsigned int endIndex);
+    void printPath();
 };
