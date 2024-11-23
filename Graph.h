@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "Stack.h"
+#include "Queue.h"
 
 using namespace std;
 
@@ -11,6 +13,18 @@ class Graph {
 private:
     unsigned int size;
     Vertex<T> *vertexes;
+    void clearVisited() {
+        for(unsigned int i = 0; i < size; i++)
+            for(auto connection : vertexes[i].adjacents)
+                vertexes[connection].visited = false;
+    }
+    bool isValidNumber(const string &str) {
+        for(int i = 0; i < str.length(); i++) {
+            if(!isdigit(str[i]))
+                return false;
+        }
+        return true;
+    }
 public:
     Graph() : vertexes(nullptr), size(0) {
     }
@@ -104,14 +118,6 @@ public:
         file.close();
         return true;
     }
-
-    bool isValidNumber(const string &str) {
-        for(int i = 0; i < str.length(); i++) {
-            if(!isdigit(str[i]))
-                return false;
-        }
-        return true;
-    }
     T* getFromIndex(unsigned int index) {
         if(!vertexes)
             return nullptr;
@@ -119,12 +125,56 @@ public:
             return nullptr;
         return &vertexes[index].data;
     }
-    void recursiveDFS(unsigned int index) {
-        vertexes[index].visited = true;
-        cout << index << " ";
-        DLinkedList<unsigned int>::Iterator i(nullptr);
-        for(i = vertexes[index].adjacents.begin(); i != vertexes[index].adjacents.end(); ++i)
-            if(!vertexes[*i].visited)
-                recursiveDFS(*i);
+    bool DFS(unsigned int startVertex) {
+        Stack<unsigned int> stack;
+        if(!size || startVertex >= size)
+            return false;
+        clearVisited();
+        cout << "DFS: (" << startVertex << "): ";
+        if(!stack.push(startVertex))
+            return false;
+        vertexes[startVertex].visited = true;
+
+        while(!stack.isEmpty()) {
+            unsigned int currentVertex = *stack.getTop();
+            cout << currentVertex << " ";
+            stack.pop();
+
+            for(auto connection : vertexes[currentVertex].adjacents) {
+                if(!vertexes[connection].visited) {
+                    if(!stack.push(connection))
+                        return false;
+                    vertexes[connection].visited = true;
+                }
+            }
+        }
+        cout << endl;
+        return true;
+    }
+    bool BFS(unsigned int startVertex) {
+        Queue<unsigned int> queue;
+        if(!size || startVertex >= size)
+            return false;
+        clearVisited();
+        cout << "BFS: (" << startVertex << "): ";
+        if(!queue.enqueue(startVertex))
+            return false;
+        vertexes[startVertex].visited = true;
+
+        while(!queue.isEmpty()) {
+            unsigned int currentVertex = *queue.getFront();
+            cout << currentVertex << " ";
+            queue.dequeue();
+
+            for(auto connection : vertexes[currentVertex].adjacents) {
+                if(!vertexes[connection].visited) {
+                    if(!queue.enqueue(connection))
+                        return false;
+                    vertexes[connection].visited = true;
+                }
+            }
+        }
+        cout << endl;
+        return true;
     }
 };
