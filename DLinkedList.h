@@ -94,7 +94,7 @@ public:
         }
         cout << endl;
     }
-    T* returnFromNumber(int num) {
+    T* returnFromNumber(unsigned int num) {
         unsigned int count(1);
         DLinkedNode<T> *current = head;
         while(current) {

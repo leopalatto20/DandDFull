@@ -19,7 +19,7 @@ private:
             vertexes[i].visited = false;
     }
     bool isValidNumber(const string &str) {
-        for(int i = 0; i < str.length(); i++) {
+        for(unsigned int i = 0; i < str.length(); i++) {
             if(!isdigit(str[i]))
                 return false;
         }
@@ -27,7 +27,7 @@ private:
     }
     DLinkedList<unsigned int> path;
 public:
-    Graph() : vertexes(nullptr), size(0) {
+    Graph() : size(0), vertexes(nullptr) {
     }
     ~Graph() {
         deleteGraph();

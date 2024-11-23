@@ -7,6 +7,6 @@ public:
     T data;
     AvlNode *left;
     AvlNode *right;
-    AvlNode(T data) : data(data), left(nullptr), right(nullptr), fe(0) {
+    AvlNode(T data) : fe(0), data(data), left(nullptr), right(nullptr) {
     }
 };

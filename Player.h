@@ -28,7 +28,7 @@ public:
     bool addSpell(Spell &spell);
     bool loadStats();
     bool addMonster(Monster &monster);
-    int getSpellDamage(int spellNum);
+    int getSpellDamage(unsigned int spellNum);
     int getHp();
     void setHp(int hp);
     int getMp();

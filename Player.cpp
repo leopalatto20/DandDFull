@@ -73,7 +73,7 @@ bool Player::addMonster(Monster &monster) {
     return defeatedMonsters.insertSorted(monster);
 }
 
- int Player::getSpellDamage(int spellNum) {
+ int Player::getSpellDamage(unsigned int spellNum) {
     if(spellNum == 0)
         return defaultAttack.getDamage();
     Spell *spell = playerSpells.returnFromNumber(spellNum);

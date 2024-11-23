@@ -96,7 +96,7 @@ Monster* MonsterCatalogue::getMonster() {
     return foundMonster;
 }
 bool MonsterCatalogue::isValidNumber(const string &str) {
-    for(int i = 0; i < str.length(); i++) {
+    for(unsigned int i = 0; i < str.length(); i++) {
         if(!isdigit(str[i]))
             return false;
     }
@@ -104,7 +104,7 @@ bool MonsterCatalogue::isValidNumber(const string &str) {
 }
 bool MonsterCatalogue::isValidDecimal(const string &str) {
     int decimalCount = 0;
-    for(int i = 0; i < str.length(); i++) {
+    for(unsigned int i = 0; i < str.length(); i++) {
         if(str[i] == '.')
             decimalCount++;
         else if(!isdigit(str[i]))

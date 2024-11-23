@@ -9,7 +9,7 @@ template <typename T>
 class HashTable {
 public:
     using HashFunction = unsigned int (*)(T&, unsigned int tableSize);
-    HashTable() : hashFunction(nullptr), table(nullptr), size(0) {
+    HashTable() : table(nullptr), size(0), hashFunction(nullptr) {
     }
     ~HashTable() {
         deleteTable();

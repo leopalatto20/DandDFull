@@ -7,5 +7,5 @@ public:
     Room();
     Room(Monster monster);
     ~Room();
-    friend ostream &operator << (ostream &os, Room &room);;
+    friend ostream &operator << (ostream &os, Room &room);
 };
