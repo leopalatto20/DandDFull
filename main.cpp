@@ -113,6 +113,8 @@ int main() {
             cerr << "No se pudo obtener el cuarto actual.\n";
             return 1;
         }
+        if(monsterCounter > 0 && monsterCounter % 3 == 0) //el jugador se puede levelear cada 3 monstruos
+            levelPlayerUp(player);
         cout << "Entrando a " << *current << endl;
         Monster currentMonster = current->monster;
         if(!fightMonster(player, currentMonster)) {
@@ -123,11 +125,9 @@ int main() {
         cout << "Derrotaste al monstruo: " << currentMonster << endl << endl;;
         player.addMonster(currentMonster);
         healPlayer(player);
-        if(monsterCounter > 0 && monsterCounter % 3 == 0) //el jugador se puede levelear cada 3 monstruos
-            levelPlayerUp(player);
         monsterCounter++;
     } while(dungeon.goForward());
-    cout << "Terminaste la dungeon!!!.\n";
+    cout << "Terminaste tu ruta!!!.\n";
     player.showInfo();
 
     return 0;
@@ -214,9 +214,9 @@ bool fightMonster(Player &player, Monster &monster) {
             return true;
         }
         cout << monster << " HP: " << monster.getHp();
-        unsigned int dmg = d10Roll();
+        int dmg = d10Roll();
         cout << "\nAhora el monstruo te ataca y te hace " << dmg << " de danio.\n\n";
-        player.setHp(player.getHp() - 20);
+        player.setHp(player.getHp() - dmg);
         if(player.getHp() <= 0) {
             player.setHp(0);
             return false;
@@ -226,7 +226,7 @@ bool fightMonster(Player &player, Monster &monster) {
 }
 
 void healPlayer(Player &player) {
-    unsigned int addHp = twoD20Roll();
+    int addHp = twoD20Roll();
     cout << "\nRecuperas " << addHp << " de vida antes de pelear contra el siguiente monstruo.\n";
     player.setHp(player.getHp() + addHp);
     if(player.getHp() > player.getMaxHp()) //su vida no puede superar la maxima
@@ -266,11 +266,11 @@ void levelPlayerUp(Player &player) {
     }
 }
 
-unsigned int d10Roll() {
+int d10Roll() {
     return 1 + rand() % 10;
 }
-unsigned int twoD20Roll() {
-    unsigned int num1 = 1 + rand() % 20;
-    unsigned int num2 = 1 + rand() % 20;
+int twoD20Roll() {
+    int num1 = 1 + rand() % 20;
+    int num2 = 1 + rand() % 20;
     return num1 + num2;
 }
