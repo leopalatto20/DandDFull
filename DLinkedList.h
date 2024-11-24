@@ -76,7 +76,7 @@ public:
         size--;
         return true;
     }
-    void printInOrder() {
+    void printInOrder() { //Mostrar la lista ligada en orden y con numeracion
         DLinkedNode<T> *current = head;
         int count(1);
         while(current) {
@@ -94,7 +94,7 @@ public:
         }
         cout << endl;
     }
-    T* returnFromNumber(unsigned int num) {
+    T* returnFromNumber(unsigned int num) { //Recibe un numero y regresa el elemento que esta en ese indice
         unsigned int count(1);
         DLinkedNode<T> *current = head;
         while(current) {
@@ -105,7 +105,7 @@ public:
         }
         return nullptr;
     }
-    bool contains(T data) {
+    bool contains(T data) { //Revisa si el elemento esta en la lista ligada
         DLinkedNode<T> *current = head;
         while(current) {
             if(current->data == data)
@@ -114,7 +114,7 @@ public:
         }
         return false;
     }
-    bool insertSorted(T data) {
+    bool insertSorted(T data) { //Inserta el dato en orden
         DLinkedNode<T> *newNode = new(nothrow) DLinkedNode<T>(data);
         if(!newNode)
             return false;
@@ -143,7 +143,7 @@ public:
         return true;
     }
 
-    class Iterator {
+    class Iterator { //Iterador para listas ligadas
     public:
         Iterator(DLinkedNode<T> *node) : current(node) {
         }
@@ -170,7 +170,7 @@ public:
     Iterator end() {
         return Iterator(nullptr);
     }
-    unsigned int getSize() {
+    unsigned int getSize() { //Regresa el tamaño para cuando se necesite saberlo
         return this->size;
     }
 };

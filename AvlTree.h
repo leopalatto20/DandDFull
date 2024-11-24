@@ -8,7 +8,7 @@ template <typename T>
 class AvlTree {
 private:
     AvlNode<T> *root;
-    unsigned int size;
+    unsigned int size; //Se lleva registro del tamaño para no tener que calcularlo todo el tiempo
     int max(int num1, int num2) {
         if(num1 > num2)
             return num1;
@@ -124,14 +124,14 @@ private:
         }
         return true;
     }
-    AvlNode<T>* replaceLeft(AvlNode<T> *&node) {
+    AvlNode<T>* replaceLeft(AvlNode<T> *&node) { //El eliminar reemplaza por la izquierda
         if(node->right)
             return replaceLeft(node->right);
         AvlNode<T> *temp = node;
         node = node->left;
         return temp;
     }
-    T* searchRec(AvlNode<T> *node, T data) {
+    T* searchRec(AvlNode<T> *node, T data) { //Busqueda pre-order para buscar datos en el arbol
         if(!node)
             return nullptr;
         if(node->data == data)
@@ -140,7 +140,7 @@ private:
             return searchRec(node->left, data);
         return searchRec(node->right, data);
     }
-    T* searchInOrderRec(AvlNode<T> *node, int numToSearch, int &counter) {
+    T* searchInOrderRec(AvlNode<T> *node, int numToSearch, int &counter) { //Busqueda in order para buscar datos en un inidice especifico del arbol
         if(!node)
             return nullptr;
         T* leftResult = searchInOrderRec(node->left, numToSearch, counter);
@@ -153,7 +153,7 @@ private:
         }
         return searchInOrderRec(node->right, numToSearch, counter);
     }
-    void printInOrderRec(AvlNode<T> *node) {
+    void printInOrderRec(AvlNode<T> *node) { //Recorrido in order
         if(!node)
             return;
         printInOrderRec(node->left);
