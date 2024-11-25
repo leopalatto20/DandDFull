@@ -2,7 +2,7 @@
 #include "HashTable.h"
 #include "Monster.h"
 #define CSV "monsters.csv"
-#define HASH_SIZE 100
+#define HASH_SIZE 200
 
 class MonsterCatalogue {
 private:

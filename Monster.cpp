@@ -55,12 +55,18 @@ string Monster::getType() {
 }
 
 unsigned int Monster::hashMonster(Monster &monster, unsigned int tableSize) {
-    string name;
+    string str;
     const int base = 53;
     unsigned int hashValue = 0, size = 0;
-    name = monster.getName();
-    size = name.size();
+    str = monster.getName();
+    size = str.size();
     for(unsigned int i = 0; i < size; i++)
-        hashValue = (hashValue * base + name[i]) % tableSize;
-    return hashValue;
+        hashValue = (hashValue * base + str[i]);
+    str = monster.getType();
+    size = str.size();
+    for(unsigned int i = 0; i < size; i++)
+        hashValue = (hashValue * base + str[i]);
+    hashValue = (hashValue * base + monster.getHp());
+    hashValue = (hashValue * base + monster.getAc());
+    return hashValue % tableSize;
 }

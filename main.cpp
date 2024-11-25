@@ -45,8 +45,8 @@ int main() {
     unsigned int buildOption;
     cout << "Escoge tu clase.\n"
                 "1. Fuerza: 75HP|5 Hechizos.\n"
-                    "2. Destreza: 60HP|6 hechizos\n"
-                    "3. Inteligencia: 45HP|10 hechizos\n";
+                "2. Destreza: 60HP|6 hechizos\n"
+                "3. Inteligencia: 45HP|10 hechizos\n";
     do {
         buildOption = getNumericInput();
         if(buildOption < 1 || buildOption> 3)
@@ -182,7 +182,7 @@ bool buySpells(Player &player, SpellShop &spellShop) {
 
 bool fightMonster(Player &player, Monster &monster) {
     cout << "Peleando contra: " << monster << " con HP: " << monster.getHp();
-    cout << "\nEmpieza la pelea.\n";
+    cout << "\nEmpieza la pelea.\n\n";
     while(player.getHp() > 0 && monster.getHp() > 0) {
         int spellChoice, damage;
         string spellChoiceStr;
