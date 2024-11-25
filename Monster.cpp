@@ -61,12 +61,12 @@ unsigned int Monster::hashMonster(Monster &monster, unsigned int tableSize) {
     str = monster.getName();
     size = str.size();
     for(unsigned int i = 0; i < size; i++)
-        hashValue = (hashValue * base + str[i]);
+        hashValue = hashValue * base + str[i];
     str = monster.getType();
     size = str.size();
     for(unsigned int i = 0; i < size; i++)
-        hashValue = (hashValue * base + str[i]);
-    hashValue = (hashValue * base + monster.getHp());
-    hashValue = (hashValue * base + monster.getAc());
+        hashValue = hashValue * base + str[i];
+    hashValue = hashValue * base + monster.getHp();
+    hashValue = hashValue * base + monster.getAc();
     return hashValue % tableSize;
 }
