@@ -49,7 +49,8 @@ bool SpellShop::loadSpells() {
             count++;
         }
         Spell spell(name, damage, mpCost);
-        spellList.insertEnd(spell);
+        if(!spellList.insertEnd(spell))
+            return false;
     }
     file.close();
     return true;
