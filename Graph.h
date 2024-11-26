@@ -140,7 +140,8 @@ public:
         while(!stack.isEmpty()) {
             unsigned int currentVertex = *stack.getTop();
             cout << currentVertex << " ";
-            stack.pop();
+            if(!stack.pop())
+                return false;
 
             for(auto connection : vertexes[currentVertex].adjacents) {
                 if(!vertexes[connection].visited) {
@@ -166,7 +167,8 @@ public:
         while(!queue.isEmpty()) {
             unsigned int currentVertex = *queue.getFront();
             cout << currentVertex << " ";
-            queue.dequeue();
+            if(!queue.dequeue())
+                return false;
 
             for(auto connection : vertexes[currentVertex].adjacents) {
                 if(!vertexes[connection].visited) {
@@ -201,7 +203,10 @@ public:
 
         while(!queue.isEmpty()) {
             unsigned int currentVertex = *queue.getFront();
-            queue.dequeue();
+            if(!queue.dequeue()) {
+                delete[] previous;
+                return false;
+            }
 
             for(auto connection : vertexes[currentVertex].adjacents) {
                 if(!vertexes[connection].visited) {
@@ -216,12 +221,21 @@ public:
 
                         unsigned int current = endVertex;
                         while(current != UINT_MAX) {
-                            stack.push(current);
+                            if(!stack.push(current)) {
+                                delete[] previous;
+                                return false;
+                            }
                             current = previous[current];
                         }
                         while(!stack.isEmpty()) {
-                            path.insertEnd(*stack.getTop());
-                            stack.pop();
+                            if(!path.insertEnd(*stack.getTop())) {
+                                delete[] previous;
+                                return false;
+                            }
+                            if(!stack.pop()) {
+                                delete[] previous;
+                                return false;
+                            }
                         }
                         delete[] previous;
                         return true;

@@ -25,6 +25,10 @@ bool Spell::operator != (Spell &spell) {
     return this->name != spell.name;
 }
 
+bool Spell::operator < (Spell &spell) {
+    return this->damage < spell.damage;
+}
+
 int Spell::getMpCost() {
     return this->mpCost;
 }

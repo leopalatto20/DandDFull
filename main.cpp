@@ -81,7 +81,7 @@ int main() {
         return 1;
 
     player.showInfo();
-
+    spellShop.deleteShop(); //Borrar tienda de hechizos porque ya no se va a usar
     cout << "Recorrido DFS de la dungeon desde el cuarto 0:\n";
     dungeon.DFS(0);
     cout << endl;

@@ -15,6 +15,7 @@ public:
     friend ostream &operator << (ostream &os, Spell &spell);
     bool operator == (Spell &spell);
     bool operator != (Spell &spell);
+    bool operator < (Spell &spell);
     int getMpCost();
     int getDamage();
 };

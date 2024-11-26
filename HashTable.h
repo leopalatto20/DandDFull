@@ -78,7 +78,7 @@ private:
     HashFunction hashFunction;
     unsigned int getIndex(T data) {
         if(!hashFunction)
-            return size + 1; //damos un valor invalido que no es negativo para respetar el unsigned int
+            return size + 1; //damos un valor invalido que revisan las funciones que usan este numero
         return hashFunction(data, size);
     }
 };
