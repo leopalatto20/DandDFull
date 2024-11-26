@@ -51,7 +51,7 @@ int main() {
         buildOption = getNumericInput();
         if(buildOption < 1 || buildOption> 3)
             cerr << "Tu entrada no esta dentro de los limites.\n";
-    }while(buildOption < 1 || buildOption> 3);
+    } while(buildOption < 1 || buildOption> 3);
 
     string buildStr;
     switch(buildOption) {
@@ -70,23 +70,33 @@ int main() {
     }
     Player player(playerName, buildStr);
     cout << "Cargando las estadisticas de tu personaje.\n";
-    if(!player.loadStats())
+    if(!player.loadStats()) {
+        cerr << "No se pudieron cargar las estadisticas de tu personaje.\n";
         return 1;
+    }
     cout << endl << endl;
 
     cout << "Estas listo para empezar a elegir tus hechizos.\n";
     cout << endl << endl;
 
-    if(!buySpells(player, spellShop))
+    if(!buySpells(player, spellShop)) {
+        cerr << "No se pudieron comprar tus hechizos. \n";
         return 1;
+    }
 
     player.showInfo();
     spellShop.deleteShop(); //Borrar tienda de hechizos porque ya no se va a usar
     cout << "Recorrido DFS de la dungeon desde el cuarto 0:\n";
-    dungeon.DFS(0);
+    if(!dungeon.DFS(0)) {
+        cerr << "No se pudo completar el recorrido DFS.\n";
+        return 1;
+    }
     cout << endl;
     cout << "Recordido BFS de la dungeon desde el cuarto 0: \n";
-    dungeon.BFS(0);
+    if(!dungeon.BFS(0)) {
+        cerr << "No se pudo completar el recorrido BFS.\n";
+        return 1;
+    }
 
     cout << endl << endl;
 
@@ -123,7 +133,10 @@ int main() {
             return 0;
         }
         cout << "Derrotaste al monstruo: " << currentMonster << endl << endl;;
-        player.addMonster(currentMonster);
+        if(!player.addMonster(currentMonster)) {
+            cerr << "No se pudo agregar al monstruo a tu catalogo.\n";
+            return 1;
+        }
         healPlayer(player);
         monsterCounter++;
     } while(dungeon.goForward());

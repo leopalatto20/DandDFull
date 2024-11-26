@@ -192,7 +192,7 @@ public:
     }
     T* searchInOrder(int numToSearch) { //O(N)
         int counter(0);
-        return(searchInOrderRec(root, numToSearch, counter));
+        return searchInOrderRec(root, numToSearch, counter) ;
     }
     void printInOrder() { //O(N)
         printInOrderRec(root);
