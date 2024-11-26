@@ -120,14 +120,14 @@ public:
         file.close();
         return true;
     }
-    T* getFromIndex(unsigned int index) {
+    T* getFromIndex(unsigned int index) { //O(1)
         if(!vertexes)
             return nullptr;
         if(index >= size)
             return nullptr;
         return &vertexes[index].data;
     }
-    bool DFS(unsigned int startVertex) {
+    bool DFS(unsigned int startVertex) { //O(N)
         Stack<unsigned int> stack;
         if(!size || startVertex >= size)
             return false;
@@ -154,7 +154,7 @@ public:
         cout << endl;
         return true;
     }
-    bool BFS(unsigned int startVertex) {
+    bool BFS(unsigned int startVertex) { //O(N)
         Queue<unsigned int> queue;
         if(!size || startVertex >= size)
             return false;
@@ -182,7 +182,7 @@ public:
         return true;
     }
 
-    bool BFSPath(unsigned int startVertex, unsigned int endVertex, DLinkedList<unsigned int>& path) {
+    bool BFSPath(unsigned int startVertex, unsigned int endVertex, DLinkedList<unsigned int>& path) { //O(N)
         Queue<unsigned int> queue;
         if(!size || startVertex >= size || endVertex >= size)
             return false;
@@ -245,10 +245,5 @@ public:
         }
         delete[] previous;
         return false;
-    }
-    T* returnFromIndex(unsigned int index) {
-        if(index >= size)
-            return nullptr;
-        return &vertexes[index].data;
     }
 };

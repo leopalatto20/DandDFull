@@ -32,7 +32,7 @@ public:
         this->hashFunction = hashFunction;
         return true;
     }
-    bool insert(T data) {
+    bool insert(T data) { //O(logn)
         if(!table)
             return false;
         unsigned int hashValue = getIndex(data);
@@ -40,7 +40,7 @@ public:
             return false;
         return table[hashValue].insert(data);
     }
-    bool deleteData(T data) {
+    bool deleteData(T data) { //O(logn)
         if(!table)
             return false;
         unsigned int hashValue = getIndex(data);
@@ -48,7 +48,7 @@ public:
             return false;
         return table[hashValue].deleteData(data);
     }
-    T* search(T data) {
+    T* search(T data) { //O(logn)
         if(!table)
             return nullptr;
         unsigned int hashValue = getIndex(data);
@@ -56,7 +56,7 @@ public:
             return nullptr;
         return table[hashValue].search(data);
     }
-    void print() {
+    void print() { //O(N)
         unsigned int longest = 0;
         for(unsigned int i = 0; i < size; i++) {
             if(table[i].getSize() > longest)
@@ -65,7 +65,7 @@ public:
         }
         cout << "Biggest was: " << longest << endl;
     }
-    T* generateRandom() {
+    T* generateRandom() { //O(logn)
         unsigned int randIndex = rand() % size;
         while(table[randIndex].getSize() <= 0)
             randIndex++; //si el arbol que se genero no tiene elementos, pasamos al siguiente
@@ -76,7 +76,7 @@ private:
     AvlTree<T> *table;
     unsigned int size;
     HashFunction hashFunction;
-    unsigned int getIndex(T data) {
+    unsigned int getIndex(T data) { //O(1)
         if(!hashFunction)
             return size + 1; //damos un valor invalido que revisan las funciones que usan este numero
         return hashFunction(data, size);

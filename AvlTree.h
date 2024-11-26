@@ -63,7 +63,7 @@ private:
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
-    void deleteTreeRec(AvlNode<T> *&node) {
+    void deleteTreeRec(AvlNode<T> *&node) { //O(N)
         if(!node)
             return;
         deleteTreeRec(node->left);
@@ -71,7 +71,7 @@ private:
         delete node;
         node = nullptr;
     }
-    bool insertRec(AvlNode<T> *&node, T data) {
+    bool insertRec(AvlNode<T> *&node, T data) { //O(logn)
         if(!node) {
             node = new(nothrow) AvlNode<T>(data);
             if(!node)
@@ -96,7 +96,7 @@ private:
         }
         return false;
     }
-    bool deleteDataRec(AvlNode<T> *&node, T data) {
+    bool deleteDataRec(AvlNode<T> *&node, T data) { //O(logn)
         if(!node)
             return false;
         if(data < node->data) {
@@ -131,7 +131,7 @@ private:
         node = node->left;
         return temp;
     }
-    T* searchRec(AvlNode<T> *node, T data) { //Busqueda pre-order para buscar datos en el arbol
+    T* searchRec(AvlNode<T> *node, T data) { //Busqueda pre-order para buscar datos en el arbol, O(logn)
         if(!node)
             return nullptr;
         if(node->data == data)
@@ -140,7 +140,7 @@ private:
             return searchRec(node->left, data);
         return searchRec(node->right, data);
     }
-    T* searchInOrderRec(AvlNode<T> *node, int numToSearch, int &counter) { //Busqueda in order para buscar datos en un inidice especifico del arbol
+    T* searchInOrderRec(AvlNode<T> *node, int numToSearch, int &counter) { //Busqueda in order para buscar datos en un inidice especifico del arbol, O(N)
         if(!node)
             return nullptr;
         T* leftResult = searchInOrderRec(node->left, numToSearch, counter);
@@ -153,7 +153,7 @@ private:
         }
         return searchInOrderRec(node->right, numToSearch, counter);
     }
-    void printInOrderRec(AvlNode<T> *node) { //Recorrido in order
+    void printInOrderRec(AvlNode<T> *node) { //O(N)
         if(!node)
             return;
         printInOrderRec(node->left);
@@ -166,35 +166,35 @@ public:
     ~AvlTree() {
         deleteTree();
     }
-    void deleteTree() {
+    void deleteTree() { //O(N)
         deleteTreeRec(root);
         size = 0;
     }
-    bool insert(T data) {
+    bool insert(T data) { //O(logn)
         if(insertRec(root, data)) {
             size++;
             return true;
         }
         return false;
     }
-    bool deleteData(T data) {
+    bool deleteData(T data) { //O(logn)
         if(deleteDataRec(root, data)) {
             size--;
             return true;
         }
         return false;
     }
-    T* search(T data) {
+    T* search(T data) { //O(logn)
         return searchRec(root, data);
     }
-    unsigned int getSize() {
+    unsigned int getSize() { //Como siempre estamos actualizando el tamaño esta operacion es O(1)
         return this->size;
     }
-    T* searchInOrder(int numToSearch) {
+    T* searchInOrder(int numToSearch) { //O(N)
         int counter(0);
         return(searchInOrderRec(root, numToSearch, counter));
     }
-    void printInOrder() {
+    void printInOrder() { //O(N)
         printInOrderRec(root);
     }
 };

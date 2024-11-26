@@ -44,7 +44,7 @@ void Dungeon::printPath() {
 }
 
 Room* Dungeon::currentRoomPath() {
-    return rooms.returnFromIndex(currentRoom);
+    return rooms.getFromIndex(currentRoom);
 }
 
 bool Dungeon::goForward() {
