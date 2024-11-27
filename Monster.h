@@ -25,5 +25,6 @@ public:
     friend ostream &operator << (ostream &os, Monster &monster);
     int getHp();
     void setHp(int hp);
-    static unsigned int hashMonster(Monster &monster, unsigned int tableSize);
 };
+
+unsigned int hashMonster(Monster &monster, unsigned int tableSize);

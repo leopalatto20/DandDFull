@@ -22,7 +22,7 @@ bool MonsterCatalogue::addMonster(Monster &monster) {
     return false;
 }
 bool MonsterCatalogue::loadFromCsv() {
-    if(!catalogue.createTable(HASH_SIZE, &Monster::hashMonster))
+    if(!catalogue.createTable(HASH_SIZE, &hashMonster))
         return false;
     ifstream file(CSV);
 

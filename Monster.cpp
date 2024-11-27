@@ -54,7 +54,7 @@ string Monster::getType() {
     return this->type;
 }
 
-unsigned int Monster::hashMonster(Monster &monster, unsigned int tableSize) {
+unsigned int hashMonster(Monster &monster, unsigned int tableSize) {
     string str;
     const int base = 53;
     unsigned int hashValue = 0, size = 0;
